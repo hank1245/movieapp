@@ -5,6 +5,7 @@ import { useNavigate } from 'react-router-dom';
 export interface IAuthRouteProps {}
 
 const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
+    //props에 디폴트로 들어있는 property children 자식 컴포넌트 전달
     const { children } = props;
     const auth = getAuth();
     const navigate = useNavigate();
