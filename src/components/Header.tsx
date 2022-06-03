@@ -4,12 +4,13 @@ import { Link, useNavigate } from 'react-router-dom'
 import { getAuth, signOut } from 'firebase/auth';
 import {deleteUserInfo} from '../features/userSlice'
 import { RootState } from '../app/store';
+import {User} from '../features/userSlice'
 
 interface Props {}
 
 const Header = () => {
   
-  const user = localStorage.getItem('user')
+  const userInfo = useSelector<RootState, User>((state) => state.user)
   const auth = getAuth();
   const dispatch = useDispatch()
   const navigate = useNavigate()
@@ -21,11 +22,12 @@ const Header = () => {
     </div>
     <div className="flex-none">
       <ul className="menu menu-horizontal p-0">
-          {user ? 
+          {userInfo.email !='' ? 
         (
             <>
                 <button className='btn rounded-pill text-xl' onClick={() => {
                 localStorage.removeItem('user')
+                console.log(userInfo)
                 dispatch(deleteUserInfo())
                 signOut(auth)
                 navigate('/')

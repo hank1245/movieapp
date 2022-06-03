@@ -3,6 +3,8 @@ import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPasswor
 import { useNavigate } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/solid'
 import tw from "tailwind-styled-components"
+import { useDispatch } from 'react-redux';
+import { setUserInfo } from '../features/userSlice';
 
 export interface ILoginPageProps {}
 
@@ -54,6 +56,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
     const [authing, setAuthing] = useState(false);
     const emailRef = useRef<HTMLInputElement>()
     const passwordRef = useRef<HTMLInputElement>()
+    const dispatch = useDispatch()
 
     const signIn = async () => {
       setAuthing(true)
@@ -62,6 +65,7 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
         const password = passwordRef.current.value
         try {
           await signInWithEmailAndPassword(auth,email,password)
+          dispatch(setUserInfo({email:email}))
           setAuthing(false)
           navigate('/')
         } catch(error) {
