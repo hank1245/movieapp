@@ -32,6 +32,7 @@ flex
 justify-center 
 py-2 
 px-4 
+my-2
 border 
 border-transparent 
 text-sm 
@@ -150,12 +151,13 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
             </div>
 
             <div>
-            <SingInButton onClick={() => signIn()} disabled={authing} type="submit" >
+            <SingInButton onClick={() => signIn()} disabled={authing} type="submit">
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                 </span>
                 Sign in
               </SingInButton>
+              <div style={{textAlign:'center', margin:'10px 0'}}>OR</div>
               <SingInButton onClick={() => signInWithGoogle()} disabled={authing} type="submit">
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
