@@ -1,5 +1,5 @@
 import React, { useRef, useState } from 'react';
-import { getAuth, GoogleAuthProvider, signInWithPopup, signInWithEmailAndPassword } from 'firebase/auth';
+import { getAuth, createUserWithEmailAndPassword } from 'firebase/auth';
 import { useNavigate } from 'react-router-dom';
 import { LockClosedIcon } from '@heroicons/react/solid'
 import tw from "tailwind-styled-components"
@@ -24,65 +24,35 @@ focus:ring-indigo-500
 focus:border-indigo-500 
 focus:z-10 sm:text-sm
 `
-const SingInButton = tw.button`
-group
-relative 
-w-full 
-flex 
-justify-center 
-py-2 
-px-4 
-border 
-border-transparent 
-text-sm 
-font-medium 
-rounded-md 
-text-white 
-bg-indigo-600 
-hover:bg-indigo-700 
-focus:outline-none 
-focus:ring-2 
-focus:ring-offset-2 
-focus:ring-indigo-500
-`
 
 
 const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
-    const auth = getAuth();
     const navigate = useNavigate();
+    const auth = getAuth()
     const [authing, setAuthing] = useState(false);
     const emailRef = useRef<HTMLInputElement>()
     const passwordRef = useRef<HTMLInputElement>()
-
-    const signIn = async () => {
+    const passwordConfirmRef = useRef<HTMLInputElement>()
+    
+    const signup = async () => {
       setAuthing(true)
-      if(emailRef.current && passwordRef.current) {
+      if(emailRef.current && passwordRef.current && passwordConfirmRef.current) {
         const email = emailRef.current.value
         const password = passwordRef.current.value
-        try {
-          await signInWithEmailAndPassword(auth,email,password)
-          setAuthing(false)
-          navigate('/')
-        } catch(error) {
-          alert('가입된 사용자가 아닙니다')
-          emailRef.current.value = ''
-          passwordRef.current.value = ''
+        const passwordConfirm = passwordConfirmRef.current.value
+        if(password != passwordConfirm) {
+          alert('비밀번호를 다르게 입력하셨습니다')
+          emailRef.current.value=''
+          passwordRef.current.value=''
+          passwordConfirmRef.current.value=''
+          return 
         }
+        await createUserWithEmailAndPassword(auth,email,password)
       }
+      setAuthing(false)
+      navigate('/')
     }
-    const signInWithGoogle = async () => {
-        setAuthing(true);
 
-        signInWithPopup(auth, new GoogleAuthProvider())
-            .then((response) => {
-                console.log(response.user.uid);
-                navigate('/');
-            })
-            .catch((error) => {
-                console.log(error);
-                setAuthing(false);
-            });
-    };
 
     return (
     <div>
@@ -94,9 +64,9 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
               src="https://tailwindui.com/img/logos/workflow-mark-indigo-600.svg"
               alt="Workflow"
             />
-            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">로그인</h2>
+            <h2 className="mt-6 text-center text-3xl font-extrabold text-gray-900">회원가입</h2>
           </div>
-          <form className="mt-8 space-y-6" action="#" method="POST">
+          <form className="mt-8 space-y-6">
             <input type="hidden" name="remember" defaultValue="true" />
             <div className="rounded-md shadow-sm -space-y-px">
               <div>
@@ -127,6 +97,20 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
                   ref={passwordRef}
                 />
               </div>
+              <div>
+                <label htmlFor="password" className="sr-only">
+                  Password
+                </label>
+                <CustomInput
+                  id="password"
+                  name="password"
+                  type="password"
+                  autoComplete="current-password"
+                  required
+                  placeholder="비밀번호를 다시 한 번 입력하세요"
+                  ref={passwordConfirmRef}
+                />
+              </div>
             </div>
 
             <div className="flex items-center justify-between">
@@ -143,25 +127,22 @@ const LoginPage: React.FunctionComponent<ILoginPageProps> = (props) => {
               </div>
 
               <div className="text-sm">
-                <a className="font-medium text-indigo-600 hover:text-indigo-500">
+                <a href="#" className="font-medium text-indigo-600 hover:text-indigo-500">
                   Forgot your password?
                 </a>
               </div>
             </div>
 
             <div>
-            <SingInButton onClick={() => signIn()} disabled={authing} type="submit" >
+              <button onClick={signup} disabled={authing}
+                type="submit"
+                className="group relative w-full flex justify-center py-2 px-4 border border-transparent text-sm font-medium rounded-md text-white bg-indigo-600 hover:bg-indigo-700 focus:outline-none focus:ring-2 focus:ring-offset-2 focus:ring-indigo-500"
+              >
                 <span className="absolute left-0 inset-y-0 flex items-center pl-3">
                   <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
                 </span>
-                Sign in
-              </SingInButton>
-              <SingInButton onClick={() => signInWithGoogle()} disabled={authing} type="submit">
-                <span className="absolute left-0 inset-y-0 flex items-center pl-3">
-                  <LockClosedIcon className="h-5 w-5 text-indigo-500 group-hover:text-indigo-400" aria-hidden="true" />
-                </span>
-                Sign in With Google
-              </SingInButton>
+                  회원 가입하기
+              </button>
             </div>
           </form>
         </div>

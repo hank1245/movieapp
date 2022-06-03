@@ -9,7 +9,10 @@ const HomePage: React.FunctionComponent<IHomePageProps> = (props) => {
     return (
         <div>
             <p>Home Page (Protected by Firebase!)</p>
-            <button className='btn rounded-pill text-2xl' onClick={() => signOut(auth)}>Sign out of Firebase</button>
+            <button className='btn rounded-pill text-2xl' onClick={() => {
+                signOut(auth)
+                localStorage.removeItem('user')
+                }}>Sign out of Firebase</button>
         </div>
     );
 };

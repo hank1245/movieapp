@@ -1,10 +1,10 @@
 export const config = {
-    firebaseConfig: {
-        apiKey: "AIzaSyBhK1VAgtIypXEnIFZdEaBVHeJ8DP3c_ug",
-        authDomain: "movie-app-zerobase.firebaseapp.com",
-        projectId: "movie-app-zerobase",
-        storageBucket: "movie-app-zerobase.appspot.com",
-        messagingSenderId: "140654462404",
-        appId: "1:140654462404:web:b36eb23b2b187394631091"
-    }
+    firebaseConfig : {
+        apiKey: "AIzaSyDd-q9dFmcDRKShsAkO9oTrS7J6mBC6k8I",
+        authDomain: "findurm-zerobase.firebaseapp.com",
+        projectId: "findurm-zerobase",
+        storageBucket: "findurm-zerobase.appspot.com",
+        messagingSenderId: "286701956916",
+        appId: "1:286701956916:web:76c8b1f94e986613dcbf61"
+      }
 };
