@@ -31,13 +31,13 @@ const Header = () => {
                 dispatch(deleteUserInfo())
                 signOut(auth)
                 navigate('/')
-                }}>Sign out of Firebase</button>
+                }}>로그아웃</button>
             </>
         )
           : (
             <>
-                <li><Link to='/login'>Login</Link></li>
-                <li><Link to='/register'>Register</Link></li>
+                <li><Link to='/login'>로그인</Link></li>
+                <li><Link to='/register'>회원가입</Link></li>
             </>   
           )}
       </ul>

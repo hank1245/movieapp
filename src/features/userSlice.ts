@@ -1,7 +1,7 @@
 import { createSlice,PayloadAction } from "@reduxjs/toolkit";
 
 interface InitialState {
-    email: string,
+    email: string | null,
 }
 
 export interface User {
@@ -9,7 +9,7 @@ export interface User {
 }
 
 const initialState:InitialState = {
-    email:''
+    email: JSON.parse(localStorage.getItem('user')) || ''
 }
 
 export const userSlice = createSlice({

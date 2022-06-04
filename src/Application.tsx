@@ -7,14 +7,19 @@ import { initializeApp } from 'firebase/app';
 import { config } from './config/config';
 import AuthRoute from './components/AuthRoute';
 import Header from './components/Header';
+import tw from "tailwind-styled-components"
 
 initializeApp(config.firebaseConfig);
 
 export interface IApplicationProps {}
 
+const App = tw.div`
+min-h-screen
+`
+
 const Application: React.FunctionComponent<IApplicationProps> = (props) => {
     return (
-        <>
+        <App>
             <BrowserRouter>
                 <Header/>
                 <Routes>
@@ -29,7 +34,7 @@ const Application: React.FunctionComponent<IApplicationProps> = (props) => {
                     <Route path="/register" element={<RegisterPage />} />
                 </Routes>
             </BrowserRouter>
-        </>
+        </App>
     );
 };
 

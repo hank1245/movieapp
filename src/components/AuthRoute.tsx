@@ -27,7 +27,7 @@ const AuthRoute: React.FunctionComponent<IAuthRouteProps> = (props) => {
 
     if (loading) return <p>loading ...</p>;
 
-    return <>{children}</>;
+    return <div style={{height:'100vh'}}>{children}</div>;
 };
 
 export default AuthRoute;
